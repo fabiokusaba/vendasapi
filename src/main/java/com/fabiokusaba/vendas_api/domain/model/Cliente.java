@@ -30,8 +30,10 @@ public class Cliente {
     }
 
     public Cliente atualizarCliente(String nome, Endereco endereco) {
+        if (endereco != null) {
+            this.endereco = endereco;
+        }
         this.nome = nome;
-        this.endereco = endereco;
         return this;
     }
 
