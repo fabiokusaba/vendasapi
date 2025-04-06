@@ -16,4 +16,8 @@ public class ClienteService {
     public Cliente cadastrar(Cliente cliente) {
         return clienteRepository.save(cliente);
     }
+
+    public Cliente buscarPorId(String id) {
+        return clienteRepository.findById(id).orElseThrow();
+    }
 }
