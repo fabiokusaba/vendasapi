@@ -1,6 +1,8 @@
 package com.fabiokusaba.vendas_api.api.v1.controller;
 
+import com.fabiokusaba.vendas_api.api.v1.request.produto.atualizar.AtualizarProdutoRequest;
 import com.fabiokusaba.vendas_api.api.v1.request.produto.cadastrar.CadastrarProdutoRequest;
+import com.fabiokusaba.vendas_api.api.v1.response.produto.atualizar.AtualizarProdutoResponse;
 import com.fabiokusaba.vendas_api.api.v1.response.produto.buscar.BuscarProdutoResponse;
 import com.fabiokusaba.vendas_api.api.v1.response.produto.buscar.ListarProdutoResponse;
 import com.fabiokusaba.vendas_api.api.v1.response.produto.cadastrar.CadastrarProdutoResponse;
@@ -36,5 +38,17 @@ public class ProdutoController {
     public ResponseEntity<List<ListarProdutoResponse>> listar(@RequestParam(required = false, defaultValue = "") String nome) {
         final var produtos = produtoService.listar(nome);
         return ResponseEntity.ok(ListarProdutoResponse.fromModelList(produtos));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AtualizarProdutoResponse> atualizar(@PathVariable("id") String id, @RequestBody AtualizarProdutoRequest request) {
+        final var produto = produtoService.atualizar(id, AtualizarProdutoRequest.toModel(request));
+        return ResponseEntity.ok(AtualizarProdutoResponse.fromModel(produto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarPorId(@PathVariable("id") String id) {
+        produtoService.deletarPorId(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -1,6 +1,5 @@
 package com.fabiokusaba.vendas_api.domain.service;
 
-import com.fabiokusaba.vendas_api.domain.model.Categoria;
 import com.fabiokusaba.vendas_api.domain.model.Produto;
 import com.fabiokusaba.vendas_api.domain.repository.CategoriaRepository;
 import com.fabiokusaba.vendas_api.domain.repository.ProdutoRepository;
@@ -39,5 +38,22 @@ public class ProdutoService {
             return produtoRepository.findByNomeContainingIgnoreCase(nome);
         }
         return produtoRepository.findAll();
+    }
+
+    public Produto atualizar(String id, Produto produto) {
+        var produtoExistente = buscarPorId(id);
+        produtoExistente.atualizarProduto(
+                produto.getNome(),
+                produto.getDescricao(),
+                produto.getCategorias(),
+                produto.getCodigoDeBarras(),
+                produto.getPreco(),
+                produto.getQuantidade()
+        );
+        return produtoRepository.save(produtoExistente);
+    }
+
+    public void deletarPorId(String id) {
+        produtoRepository.deleteById(id);
     }
 }
