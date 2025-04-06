@@ -1,6 +1,6 @@
-package com.fabiokusaba.vendas_api.model;
+package com.fabiokusaba.vendas_api.domain.model;
 
-import com.fabiokusaba.vendas_api.vo.Endereco;
+import com.fabiokusaba.vendas_api.domain.vo.Endereco;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

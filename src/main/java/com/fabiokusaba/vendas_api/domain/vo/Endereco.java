@@ -1,4 +1,4 @@
-package com.fabiokusaba.vendas_api.vo;
+package com.fabiokusaba.vendas_api.domain.vo;
 
 public class Endereco {
 
