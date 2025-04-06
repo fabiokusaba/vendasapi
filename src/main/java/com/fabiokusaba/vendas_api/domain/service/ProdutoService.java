@@ -5,6 +5,9 @@ import com.fabiokusaba.vendas_api.domain.model.Produto;
 import com.fabiokusaba.vendas_api.domain.repository.CategoriaRepository;
 import com.fabiokusaba.vendas_api.domain.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 @Service
 public class ProdutoService {
@@ -25,5 +28,16 @@ public class ProdutoService {
             }
         }
         return produtoRepository.save(produto);
+    }
+
+    public Produto buscarPorId(String id) {
+        return produtoRepository.findById(id).orElseThrow();
+    }
+
+    public List<Produto> listar(String nome) {
+        if (StringUtils.hasText(nome)) {
+            return produtoRepository.findByNomeContainingIgnoreCase(nome);
+        }
+        return produtoRepository.findAll();
     }
 }
