@@ -29,6 +29,12 @@ public class Cliente {
         return new Cliente(id, nome, cpf, endereco, true);
     }
 
+    public Cliente atualizarCliente(String nome, Endereco endereco) {
+        this.nome = nome;
+        this.endereco = endereco;
+        return this;
+    }
+
     public String getId() {
         return id;
     }
