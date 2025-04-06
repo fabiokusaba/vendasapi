@@ -29,9 +29,12 @@ public class Cliente {
         return new Cliente(id, nome, cpf, endereco, true);
     }
 
-    public Cliente atualizarCliente(String nome, Endereco endereco) {
+    public Cliente atualizarCliente(String nome, String cpf, Endereco endereco) {
         if (endereco != null) {
             this.endereco = endereco;
+        }
+        if (cpf != null) {
+            this.cpf = cpf;
         }
         this.nome = nome;
         return this;
