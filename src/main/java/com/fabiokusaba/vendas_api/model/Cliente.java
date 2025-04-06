@@ -24,9 +24,9 @@ public class Cliente {
         this.ativo = ativo;
     }
 
-    public static Cliente novoCliente(String nome, String cpf, Endereco endereco, Boolean ativo) {
+    public static Cliente novoCliente(String nome, String cpf, Endereco endereco) {
         final var id = UUID.randomUUID().toString();
-        return new Cliente(id, nome, cpf, endereco, ativo);
+        return new Cliente(id, nome, cpf, endereco, true);
     }
 
     public String getId() {
