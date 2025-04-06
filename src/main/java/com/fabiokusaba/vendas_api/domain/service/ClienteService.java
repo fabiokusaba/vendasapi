@@ -31,6 +31,12 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
+    public Cliente atualizar(String id, Cliente cliente) {
+        final var clienteSalvo = buscarPorId(id);
+        clienteSalvo.atualizarCliente(cliente.getNome(), cliente.getCpf(), cliente.getEndereco());
+        return clienteRepository.save(clienteSalvo);
+    }
+
     public void deletarPorId(String id) {
         clienteRepository.deleteById(id);
     }

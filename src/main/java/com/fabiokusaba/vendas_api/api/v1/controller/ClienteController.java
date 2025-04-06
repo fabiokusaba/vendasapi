@@ -1,6 +1,8 @@
 package com.fabiokusaba.vendas_api.api.v1.controller;
 
+import com.fabiokusaba.vendas_api.api.v1.request.cliente.atualizar.AtualizarClienteRequest;
 import com.fabiokusaba.vendas_api.api.v1.request.cliente.cadastrar.CadastrarClienteRequest;
+import com.fabiokusaba.vendas_api.api.v1.response.cliente.atualizar.AtualizarClienteResponse;
 import com.fabiokusaba.vendas_api.api.v1.response.cliente.buscar.BuscarClienteResponse;
 import com.fabiokusaba.vendas_api.api.v1.response.cliente.buscar.ListarClienteResponse;
 import com.fabiokusaba.vendas_api.api.v1.response.cliente.cadastrar.CadastrarClienteResponse;
@@ -36,6 +38,12 @@ public class ClienteController {
     public ResponseEntity<List<ListarClienteResponse>> listar(@RequestParam(required = false, defaultValue = "") String nome) {
         final var clientes = clienteService.listar(nome);
         return ResponseEntity.ok(ListarClienteResponse.fromModelList(clientes));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AtualizarClienteResponse> atualizar(@PathVariable("id") String id, @RequestBody AtualizarClienteRequest request) {
+        final var clienteAtualizado = clienteService.atualizar(id, AtualizarClienteRequest.toModel(request));
+        return ResponseEntity.ok(AtualizarClienteResponse.fromModel(clienteAtualizado));
     }
 
     @DeleteMapping("/{id}")
