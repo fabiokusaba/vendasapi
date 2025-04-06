@@ -1,5 +1,6 @@
-package com.fabiokusaba.vendas_api.api.v1.response;
+package com.fabiokusaba.vendas_api.api.v1.response.cliente.cadastrar;
 
+import com.fabiokusaba.vendas_api.api.v1.response.EnderecoResponse;
 import com.fabiokusaba.vendas_api.domain.model.Cliente;
 
 public record CadastrarClienteResponse(
