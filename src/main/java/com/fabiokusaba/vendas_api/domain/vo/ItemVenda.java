@@ -8,16 +8,16 @@ public class ItemVenda {
     private Integer quantidade;
     private Double precoTotal;
 
-    public ItemVenda(String produtoId, String nome, Double preco, Integer quantidade) {
+    private ItemVenda(String produtoId, String nome, Double preco, Integer quantidade, Double precoTotal) {
         this.produtoId = produtoId;
         this.nome = nome;
         this.preco = preco;
         this.quantidade = quantidade;
-        this.precoTotal = preco;
+        this.precoTotal = precoTotal;
     }
 
-    public static ItemVenda novoItemVenda(String produtoId, String nome, Double preco, Integer quantidade) {
-        return new ItemVenda(produtoId, nome, preco, quantidade);
+    public static ItemVenda novoItemVenda(String produtoId, String nome, Double preco, Integer quantidade, Double precoTotal) {
+        return new ItemVenda(produtoId, nome, preco, quantidade, precoTotal);
     }
 
     public String getProdutoId() {
