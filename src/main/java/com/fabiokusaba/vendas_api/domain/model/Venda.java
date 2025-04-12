@@ -49,7 +49,8 @@ public class Venda {
                                 item.getProdutoId(),
                                 null,
                                 null,
-                                item.getQuantidade()
+                                item.getQuantidade(),
+                                null
                         ),
                         (item1, item2) -> {
                             item1.setQuantidade(item1.getQuantidade() + item2.getQuantidade());
