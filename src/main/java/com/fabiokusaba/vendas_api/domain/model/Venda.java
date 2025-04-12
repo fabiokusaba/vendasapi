@@ -6,9 +6,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Document(collection = "venda")
 public class Venda {
@@ -39,6 +38,27 @@ public class Venda {
                 .stream()
                 .mapToDouble(ItemVenda::getPrecoTotal)
                 .sum();
+    }
+
+    public void agruparItens() {
+        Map<String, ItemVenda> itensAgrupados = this.itens
+                .stream()
+                .collect(Collectors.toMap(
+                        ItemVenda::getProdutoId,
+                        item -> ItemVenda.novoItemVenda(
+                                item.getProdutoId(),
+                                null,
+                                null,
+                                item.getQuantidade()
+                        ),
+                        (item1, item2) -> {
+                            item1.setQuantidade(item1.getQuantidade() + item2.getQuantidade());
+                            return item1;
+                        }
+                ));
+
+        this.itens.clear();
+        this.itens.addAll(itensAgrupados.values());
     }
 
     public String getId() {
