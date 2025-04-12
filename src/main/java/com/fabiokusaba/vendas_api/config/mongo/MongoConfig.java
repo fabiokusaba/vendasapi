@@ -1,4 +1,4 @@
-package com.fabiokusaba.vendas_api.config;
+package com.fabiokusaba.vendas_api.config.mongo;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
