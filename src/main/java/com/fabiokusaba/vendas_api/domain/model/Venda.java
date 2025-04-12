@@ -26,7 +26,7 @@ public class Venda {
         this.data = LocalDateTime.now();
         this.valor = 0.0;
         this.status = StatusVenda.ABERTA;
-        this.itens = itens != null ? itens : new ArrayList<>();
+        this.itens = itens != null ? new ArrayList<>(itens) : new ArrayList<>();
     }
 
     public static Venda novaVenda(String clienteId, List<ItemVenda> itens) {
