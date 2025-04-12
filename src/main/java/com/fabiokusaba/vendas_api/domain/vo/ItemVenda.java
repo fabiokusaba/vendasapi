@@ -13,7 +13,11 @@ public class ItemVenda {
         this.nome = nome;
         this.preco = preco;
         this.quantidade = quantidade;
-        this.precoTotal = preco * quantidade;
+        this.precoTotal = preco;
+    }
+
+    public static ItemVenda novoItemVenda(String produtoId, String nome, Double preco, Integer quantidade) {
+        return new ItemVenda(produtoId, nome, preco, quantidade);
     }
 
     public String getProdutoId() {
@@ -34,5 +38,25 @@ public class ItemVenda {
 
     public Double getPrecoTotal() {
         return precoTotal;
+    }
+
+    public void setProdutoId(String produtoId) {
+        this.produtoId = produtoId;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setPreco(Double preco) {
+        this.preco = preco;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public void setPrecoTotal(Double precoTotal) {
+        this.precoTotal = precoTotal;
     }
 }
