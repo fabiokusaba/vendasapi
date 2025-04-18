@@ -54,6 +54,21 @@ public class VendaService {
         return vendaRepository.save(venda);
     }
 
+    public void adicionarItemVenda(String vendaId, ItemVenda itemVenda) {
+
+        final var venda = vendaRepository.findById(vendaId)
+                .orElseThrow(() -> new IllegalArgumentException("Venda não encontrada"));
+
+        final var produto = produtoRepository.findById(itemVenda.getProdutoId())
+                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
+
+        adicionarItem(venda, itemVenda, produto);
+
+        venda.calcularValor();
+
+        vendaRepository.save(venda);
+    }
+
     private void atualizarInformacoesItensVenda(Venda venda, List<Produto> produtos) {
         Map<String, Produto> produtosMap = produtos.stream()
                 .collect(Collectors.toMap(Produto::getId, Function.identity()));
@@ -65,5 +80,24 @@ public class VendaService {
             item.setPreco(produto.getPreco());
             item.setPrecoTotal(produto.getPreco() * item.getQuantidade());
         });
+    }
+
+    private void adicionarItem(Venda venda, ItemVenda itemVenda, Produto produto) {
+        ItemVenda itemExistente = venda.getItens()
+                .stream()
+                .filter(item -> item.getProdutoId().equals(itemVenda.getProdutoId()))
+                .findFirst()
+                .orElse(null);
+
+        if (itemExistente != null) {
+            itemExistente.setQuantidade(itemExistente.getQuantidade() + itemVenda.getQuantidade());
+            itemExistente.setPrecoTotal(itemExistente.getPrecoTotal() + (itemVenda.getQuantidade() * itemExistente.getPreco()));
+        } else {
+            itemVenda.setNome(produto.getNome());
+            itemVenda.setPreco(produto.getPreco());
+            itemVenda.setPrecoTotal(itemVenda.getQuantidade() * produto.getPreco());
+
+            venda.getItens().add(itemVenda);
+        }
     }
 }

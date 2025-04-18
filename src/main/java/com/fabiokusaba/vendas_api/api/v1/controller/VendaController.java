@@ -1,6 +1,7 @@
 package com.fabiokusaba.vendas_api.api.v1.controller;
 
 import com.fabiokusaba.vendas_api.api.v1.openapi.VendaOpenAPI;
+import com.fabiokusaba.vendas_api.api.v1.request.venda.ItemVendaRequest;
 import com.fabiokusaba.vendas_api.api.v1.request.venda.cadastrar.CadastrarVendaRequest;
 import com.fabiokusaba.vendas_api.api.v1.response.venda.cadastrar.CadastrarVendaResponse;
 import com.fabiokusaba.vendas_api.domain.service.VendaService;
@@ -25,5 +26,12 @@ public class VendaController implements VendaOpenAPI {
         final var venda = vendaService.cadastrar(CadastrarVendaRequest.toVenda(request));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new CadastrarVendaResponse(venda.getId()));
+    }
+
+    @Override
+    public ResponseEntity<Void> adicionarItemVenda(String vendaId, ItemVendaRequest request) {
+        vendaService.adicionarItemVenda(vendaId, ItemVendaRequest.toItemVenda(request));
+
+        return ResponseEntity.noContent().build();
     }
 }
