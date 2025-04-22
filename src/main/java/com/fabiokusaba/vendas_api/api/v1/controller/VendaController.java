@@ -34,4 +34,11 @@ public class VendaController implements VendaOpenAPI {
 
         return ResponseEntity.noContent().build();
     }
+
+    @Override
+    public ResponseEntity<Void> removerItemVenda(String vendaId, ItemVendaRequest request) {
+        vendaService.removerItemVenda(vendaId, ItemVendaRequest.toItemVenda(request));
+
+        return ResponseEntity.noContent().build();
+    }
 }
