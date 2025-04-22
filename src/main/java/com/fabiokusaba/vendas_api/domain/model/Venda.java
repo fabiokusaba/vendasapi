@@ -62,6 +62,43 @@ public class Venda {
         this.itens.addAll(itensAgrupados.values());
     }
 
+    public void adicionarItem(ItemVenda itemVenda) {
+        this.itens.stream()
+                .filter(item -> item.getProdutoId().equals(itemVenda.getProdutoId()))
+                .findFirst()
+                .ifPresentOrElse(
+                        item -> {
+                            item.setQuantidade(item.getQuantidade() + itemVenda.getQuantidade());
+                            item.setPreco(itemVenda.getPreco());
+                            item.setPrecoTotal(item.getQuantidade() * item.getPreco());
+                        },
+                        () -> this.itens.add(itemVenda)
+                );
+
+        this.calcularValor();
+    }
+
+    public void removerItem(ItemVenda itemVenda) {
+        this.itens.stream()
+                .filter(item -> item.getProdutoId().equals(itemVenda.getProdutoId()))
+                .findFirst()
+                .ifPresentOrElse(
+                        item -> {
+                            if (item.getQuantidade() <= itemVenda.getQuantidade()) {
+                                this.itens.remove(item);
+                            } else {
+                                item.setQuantidade(item.getQuantidade() - itemVenda.getQuantidade());
+                                item.setPrecoTotal(item.getPreco() * item.getQuantidade());
+                            }
+                        },
+                        () -> {
+                            throw new IllegalArgumentException("Item não encontrado na venda");
+                        }
+                );
+
+        this.calcularValor();
+    }
+
     public String getId() {
         return id;
     }
@@ -83,6 +120,6 @@ public class Venda {
     }
 
     public List<ItemVenda> getItens() {
-        return itens;
+        return Collections.unmodifiableList(itens);
     }
 }
