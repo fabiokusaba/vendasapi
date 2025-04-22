@@ -99,6 +99,6 @@ public class Venda {
     }
 
     public List<ItemVenda> getItens() {
-        return itens;
+        return Collections.unmodifiableList(itens);
     }
 }
