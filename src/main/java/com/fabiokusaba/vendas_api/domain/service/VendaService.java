@@ -73,6 +73,23 @@ public class VendaService {
         vendaRepository.save(venda);
     }
 
+    public void removerItemVenda(String vendaId, ItemVenda itemVenda) {
+
+        if (itemVenda.getQuantidade() <= 0) {
+            throw new IllegalArgumentException("Quantidade deve ser maior que zero");
+        }
+
+        final var venda = vendaRepository.findById(vendaId)
+                .orElseThrow(() -> new IllegalArgumentException("Venda não encontrada"));
+
+        produtoRepository.findById(itemVenda.getProdutoId())
+                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
+
+        venda.removerItem(itemVenda);
+
+        vendaRepository.save(venda);
+    }
+
     private void atualizarInformacoesItensVenda(Venda venda, List<Produto> produtos) {
         Map<String, Produto> produtosMap = produtos.stream()
                 .collect(Collectors.toMap(Produto::getId, Function.identity()));
