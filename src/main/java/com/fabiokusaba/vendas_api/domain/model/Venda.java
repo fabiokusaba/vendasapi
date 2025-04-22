@@ -62,6 +62,22 @@ public class Venda {
         this.itens.addAll(itensAgrupados.values());
     }
 
+    public void adicionarItem(ItemVenda itemVenda) {
+        this.itens.stream()
+                .filter(item -> item.getProdutoId().equals(itemVenda.getProdutoId()))
+                .findFirst()
+                .ifPresentOrElse(
+                        item -> {
+                            item.setQuantidade(item.getQuantidade() + itemVenda.getQuantidade());
+                            item.setPreco(itemVenda.getPreco());
+                            item.setPrecoTotal(item.getQuantidade() * item.getPreco());
+                        },
+                        () -> this.itens.add(itemVenda)
+                );
+
+        this.calcularValor();
+    }
+
     public String getId() {
         return id;
     }
