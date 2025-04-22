@@ -78,6 +78,27 @@ public class Venda {
         this.calcularValor();
     }
 
+    public void removerItem(ItemVenda itemVenda) {
+        this.itens.stream()
+                .filter(item -> item.getProdutoId().equals(itemVenda.getProdutoId()))
+                .findFirst()
+                .ifPresentOrElse(
+                        item -> {
+                            if (item.getQuantidade() <= itemVenda.getQuantidade()) {
+                                this.itens.remove(item);
+                            } else {
+                                item.setQuantidade(item.getQuantidade() - itemVenda.getQuantidade());
+                                item.setPrecoTotal(item.getPreco() * item.getQuantidade());
+                            }
+                        },
+                        () -> {
+                            throw new IllegalArgumentException("Item não encontrado na venda");
+                        }
+                );
+
+        this.calcularValor();
+    }
+
     public String getId() {
         return id;
     }
