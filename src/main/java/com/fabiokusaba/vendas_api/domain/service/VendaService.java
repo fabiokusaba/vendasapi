@@ -62,9 +62,13 @@ public class VendaService {
         final var produto = produtoRepository.findById(itemVenda.getProdutoId())
                 .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
 
-        adicionarItem(venda, itemVenda, produto);
+        itemVenda.atualizarInformacoesItemVenda(
+                produto.getNome(),
+                produto.getPreco(),
+                itemVenda.getQuantidade()
+        );
 
-        venda.calcularValor();
+        venda.adicionarItem(itemVenda);
 
         vendaRepository.save(venda);
     }
@@ -82,22 +86,4 @@ public class VendaService {
         });
     }
 
-    private void adicionarItem(Venda venda, ItemVenda itemVenda, Produto produto) {
-        ItemVenda itemExistente = venda.getItens()
-                .stream()
-                .filter(item -> item.getProdutoId().equals(itemVenda.getProdutoId()))
-                .findFirst()
-                .orElse(null);
-
-        if (itemExistente != null) {
-            itemExistente.setQuantidade(itemExistente.getQuantidade() + itemVenda.getQuantidade());
-            itemExistente.setPrecoTotal(itemExistente.getPrecoTotal() + (itemVenda.getQuantidade() * itemExistente.getPreco()));
-        } else {
-            itemVenda.setNome(produto.getNome());
-            itemVenda.setPreco(produto.getPreco());
-            itemVenda.setPrecoTotal(itemVenda.getQuantidade() * produto.getPreco());
-
-            venda.getItens().add(itemVenda);
-        }
-    }
 }
