@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -103,4 +104,8 @@ public class VendaService {
         });
     }
 
+    public Venda buscarPorId(String id) {
+        return vendaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Venda de id " + id + " não encontrada"));
+    }
 }

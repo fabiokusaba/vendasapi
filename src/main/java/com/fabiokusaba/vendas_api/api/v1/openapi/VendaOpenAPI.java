@@ -42,4 +42,10 @@ public interface VendaOpenAPI {
     @ApiResponse(responseCode = "400", description = "Erro de validação")
     @ApiResponse(responseCode = "500", description = "Erro interno de servidor")
     ResponseEntity<Pagination<VendaResponse>> listar(@ModelAttribute VendaFilter vendaFilter);
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Busca uma venda por id")
+    @ApiResponse(responseCode = "200", description = "Venda buscada com sucesso")
+    @ApiResponse(responseCode = "400", description = "Erro de validação")
+    ResponseEntity<VendaResponse> buscarPorId(@PathVariable("id") String id);
 }
