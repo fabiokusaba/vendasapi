@@ -41,6 +41,8 @@ public class VendaQueryServiceImpl implements VendaQueryService {
             );
         }
 
+        final var totalResultados =  mongoTemplate.count(query, Venda.class);
+
         Pageable pageable = PageRequest.of(
                 filter.getPagina(),
                 filter.getQtdPorPagina(),
@@ -55,7 +57,7 @@ public class VendaQueryServiceImpl implements VendaQueryService {
         return new Pagination<>(
                 pageable.getPageNumber() + 1,
                 pageable.getPageSize(),
-                mongoTemplate.count(query, Venda.class),
+                totalResultados,
                 vendas
         );
     }
