@@ -11,8 +11,6 @@ import com.fabiokusaba.vendas_api.domain.service.VendaQueryService;
 import com.fabiokusaba.vendas_api.domain.service.VendaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -62,5 +60,11 @@ public class VendaController implements VendaOpenAPI {
                                 .toList()
                 )
         );
+    }
+
+    @Override
+    public ResponseEntity<VendaResponse> buscarPorId(String id) {
+        final var venda = vendaService.buscarPorId(id);
+        return ResponseEntity.ok().body(VendaResponse.fromModel(venda));
     }
 }
