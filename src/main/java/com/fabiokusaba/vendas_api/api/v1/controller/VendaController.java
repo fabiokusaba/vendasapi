@@ -67,4 +67,14 @@ public class VendaController implements VendaOpenAPI {
         final var venda = vendaService.buscarPorId(id);
         return ResponseEntity.ok().body(VendaResponse.fromModel(venda));
     }
+
+    @Override
+    public ResponseEntity<Void> deletarPorId(String id) {
+        final var venda = vendaService.buscarPorId(id);
+        if (venda != null) {
+            vendaService.deletarPorId(venda.getId());
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
 }

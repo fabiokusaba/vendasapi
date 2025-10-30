@@ -48,4 +48,11 @@ public interface VendaOpenAPI {
     @ApiResponse(responseCode = "200", description = "Venda buscada com sucesso")
     @ApiResponse(responseCode = "400", description = "Erro de validação")
     ResponseEntity<VendaResponse> buscarPorId(@PathVariable("id") String id);
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Remove uma venda por id")
+    @ApiResponse(responseCode = "204", description = "Venda removida com sucesso")
+    @ApiResponse(responseCode = "404", description = "Venda não encontrada")
+    @ApiResponse(responseCode = "500", description = "Erro interno de servidor")
+    ResponseEntity<Void> deletarPorId(@PathVariable("id") String id);
 }

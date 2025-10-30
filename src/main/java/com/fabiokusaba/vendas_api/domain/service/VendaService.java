@@ -108,4 +108,8 @@ public class VendaService {
         return vendaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Venda de id " + id + " não encontrada"));
     }
+
+    public void deletarPorId(String vendaId) {
+        vendaRepository.deleteById(vendaId);
+    }
 }
